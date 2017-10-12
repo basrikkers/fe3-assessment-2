@@ -72,12 +72,12 @@ var header = doc.indexOf("Verkiezingen; Historische uitslagen Tweede Kamer"); //
  
  ## Data
  
- `Partij` - Party of the dutch political system
- `1994` - 1994 election
- `1998` - 1998 election
- `2002` - 2002 election
- `2003` - 2003 election
- `2005` - 2004 election
+ * `Partij` - Party of the dutch political system
+ * `1994` - 1994 election results
+ * `1998` - 1998 election results
+ * `2002` - 2002 election results
+ * `2003` - 2003 election results
+ * `2005` - 2004 election results
  
  ## License
  
