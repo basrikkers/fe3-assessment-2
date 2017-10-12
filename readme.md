@@ -1,37 +1,86 @@
-# ![Assessment 2][banner]
+# Assessment 2
 
-This repository can be forked for [**assessment 2**][a2] of [frontend 3][fe3]
-at [**@CMDA**][cmda].
+![banner](previewchart.png)
 
-## TODO
+## skills needed
+* Clean data
+* Transition
+* Interaction
 
-*   [ ] [GitHub Pages](#github-pages)
-*   [ ] [Metadata](#metadata)
-*   [ ] [Issues](#issues)
-*   [ ] Replace this document in your fork with your own readme!
+## background
 
-## GitHub Pages
+I got the data from statline.cbs.nl. Its a election result of the latest five elections. 
 
-Set up [GitHub Pages][pages] for this fork through the **Settings** pane.  Use
-the **Master branch** as its source.  Do not choose a Jekyll template.
+First i had to clean the data. I took the steps that i had learned at the clean practice. I started with the header and then changed everything that needed to be changed to get a clean index.txt.
 
-## Metadata
+I have also cleaned the file so that its better looking on the graph. A long name like: Partij van de Vrijheid, changed to PVV
 
-Edit the **description** and **url** of your repository.  Click on edit above
-the green Clone or download button and fill in a correct description and use the
-`github.io` URL you just set up.
+clean code:
+```JS
+var header = doc.indexOf("Verkiezingen; Historische uitslagen Tweede Kamer"); //header of the txt
 
-## Issues
+    doc = doc.replace(/Groep Wilders \/ Partij voor de Vrijheid+/g,'PVV');  //changing the long name to pvv for visual aspect
+    doc = doc.replace(/"Zetelverdeling per partij+";/g,''); //remove title
+    doc = doc.replace(/"aantal"+;/g,'');//remove aantal title
+    doc = doc.replace(/-+/g,'')//remove '-' where zetels = 0
+    doc = doc.replace(/;/g,',')//replace ; for ,
+    doc = doc.replace(/ +/g, '')// delete spaces
+    var header2 = doc.indexOf("Onderwerpen_1"); //select subtitle
+    var end = doc.indexOf('\n', header2);//end subtitle
 
-Enable issues so we can give feedback by going to the settings tab of your fork
-and checking the box next to `issues`.
+    doc = doc.slice(end).trim(); //removing header and subtitle
+    
+  ```
+  
+  The bar chart i choose already had a interaction function with a select menu. I got it to work with my dataset. 
+  
+  The next thing i did was created a sort function based on the example of @wooorm slides. It was difficult combine the two interactions.
+  the problems i faced where mainly dueded to the position of code. When i started to combine the change functions it finally worked.
+  
+  ```JS
+    function change() {
+    d3.select('select')
+      .property('selectedIndex', fields.length - 1)
+      .dispatch('change');
 
-[banner]: https://cdn.rawgit.com/cmda-fe3/logo/a4b0614/banner-assessment-2.svg
 
-[a2]: https://github.com/cmda-fe3/course-17-18/tree/master/assessment-2#description
+    d3.select('input')
+      .property('checked', true)
+      .dispatch('change');
+  }
+  
+ ```
+ 
+ I also created a color function. It changed the color of the bar, depening on the first x position. I used a color scheme.
+ ```JS
+ var color = d3.scaleOrdinal(d3.schemeCategory20c);
+ 
+   var bars = group
+    .selectAll('.bar')
+    .data(data)
+    .enter()
+    .append('rect')
+    .attr('class', 'bar')
+    .style('fill', colorBar); //give color by function colorBar
+    
+  function colorBar(d){ //fuction that defines color for the bar based on a partij
 
-[fe3]: https://github.com/cmda-fe3
+    return color(x(state(d)));
 
-[cmda]: https://github.com/cmda
-
-[pages]: https://pages.github.com
+  }
+```
+ 
+ ## Data
+ 
+ `Partij` - Party of the dutch political system
+ `1994` - 1994 election
+ `1998` - 1998 election
+ `2002` - 2002 election
+ `2003` - 2003 election
+ `2005` - 2004 election
+ 
+ ## License
+ 
+ GNU @ Basrikkers
+ 
+ 
